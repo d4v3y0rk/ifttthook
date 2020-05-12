@@ -1,26 +1,32 @@
 const express = require('express')
-const redis = require("redis")
+var Redis = require('ioredis')
+var redis = new Redis(process.env.REDIS_URL)
 const app = express()
-const redisClient = redis.createClient(process.env.REDIS_URL)
 const port = process.env.PORT
 
 app.use(express.json()) 
 app.use(express.urlencoded({ extended: true }))
 
-app.get('/toggle', async (req, res) => {
-    await redisClient.set("garage", "toggle", redis.print)
+app.get('/toggle', (req, res) => {
+    redis.set("garage", "toggle")
     res.sendStatus(200)
 })
 
-app.get('/', async (req, res) => {
-    var myVar = await redisClient.get('garage')
+app.get('/store', (req, res) => {
+    console.log(req.body)
+    redis.set("location", req.body)
+    res.sendStatus(200)
+})
+
+app.get('/', (req, res) => {
+    var myVar = redis.get('garage')
     if ( myVar == "toggle") {
         console.log(myVar)
         res.send(`Found the key...`)
     } else {
         res.send(`did not find the key.`)
     }
-    await redisClient.set('garage', '', redis.print)
+    redis.set('garage', '')
     res.sendStatus(200)
 })
 app.listen(port, () => console.log(`IfTTT Hook App Listening...`))
