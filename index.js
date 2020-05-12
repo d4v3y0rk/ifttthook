@@ -20,13 +20,12 @@ app.get('/store', (req, res) => {
 
 app.get('/', (req, res) => {
     var myVar = redis.get('garage')
+    console.log(myVar)
     if ( myVar == "toggle") {
-        console.log(myVar)
         res.send(`Found the key...`)
     } else {
         res.send(`did not find the key.`)
     }
     redis.set('garage', '')
-    res.sendStatus(200)
 })
 app.listen(port, () => console.log(`IfTTT Hook App Listening...`))
