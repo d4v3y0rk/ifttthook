@@ -4,7 +4,7 @@ const port = process.env.PORT
 
 app.get('/', (req, res) => {
     console.log(req.body)
-    res.send(200)
+    res.sendStatus(200)
 })
 
 app.listen(port, () => console.log(`IfTTT Hook App Listening...`))
