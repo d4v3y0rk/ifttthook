@@ -7,29 +7,35 @@ const port = process.env.PORT
 app.use(express.json()) 
 app.use(express.urlencoded({ extended: true }))
 
-app.post('/garage', async (req, res) => {
-    console.log(req.body)
-    await redis.set("garage", "toggle")
+app.post('/rest/garage', async (req, res) => {
+    console.log(`POST: got a call to /rest/garage`)
+    console.log(req.body.action)
+    await redis.set("garage", req.body.action)
     res.sendStatus(200)
 })
 
-app.get('/garage', async (req, res) => {
+app.get('/rest/garage', async (req, res) => {
+    console.log(`GET: got a call to /rest/garage`)
     var value = await redis.get("garage")
+    await redis.set('garage', '')
     res.send(value)
 })
 
-app.post('/geofence', async (req, res) => {
+app.post('/rest/geofence', async (req, res) => {
+    console.log(`POST: got a call to /rest/geofence`)
     console.log(req.body)
     await redis.set("location", req.body)
     res.sendStatus(200)
 })
 
-app.get('/geofence', async (req, res) => {
+app.get('/rest/geofence', async (req, res) => {
+    console.log(`GET: got a call to /rest/geofence`)
     var value = await redis.get("location")
     res.send(value)
 })
 
-app.get('/', async (req, res) => {
+app.get('/rest/', async (req, res) => {
+    console.log(`got a call to /rest/`)
     res.send("Nothing to see here.")
 })
 app.listen(port, () => console.log(`IfTTT Hook App Listening...`))
