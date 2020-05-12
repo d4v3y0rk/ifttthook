@@ -7,25 +7,29 @@ const port = process.env.PORT
 app.use(express.json()) 
 app.use(express.urlencoded({ extended: true }))
 
-app.get('/toggle', async (req, res) => {
+app.post('/garage', async (req, res) => {
+    console.log(req.body)
     await redis.set("garage", "toggle")
     res.sendStatus(200)
 })
 
-app.get('/store', async (req, res) => {
+app.get('/garage', async (req, res) => {
+    var value = await redis.get("garage")
+    res.send(value)
+})
+
+app.post('/geofence', async (req, res) => {
     console.log(req.body)
     await redis.set("location", req.body)
     res.sendStatus(200)
 })
 
+app.get('/geofence', async (req, res) => {
+    var value = await redis.get("location")
+    res.send(value)
+})
+
 app.get('/', async (req, res) => {
-    var myVar = await redis.get('garage')
-    console.log(myVar)
-    if ( myVar == "toggle") {
-        res.send(`Found the key...`)
-    } else {
-        res.send(`did not find the key.`)
-    }
-    await redis.set('garage', '')
+    res.send("Nothing to see here.")
 })
 app.listen(port, () => console.log(`IfTTT Hook App Listening...`))
