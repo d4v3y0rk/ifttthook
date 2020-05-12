@@ -13,7 +13,12 @@ app.get('/toggle', async (req, res) => {
 })
 
 app.get('/', async (req, res) => {
-    console.log(client.get('garage'))
+    if (client.get('garage') == "toggle") {
+        console.log(client.get('garage'))
+        res.send(`Found the key...`)
+    } else {
+        res.send(`did not find the key.`)
+    }
     await client.set('garage', '', redis.print)
     res.sendStatus(200)
 })
