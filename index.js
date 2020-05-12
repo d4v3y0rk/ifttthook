@@ -1,7 +1,9 @@
+var compression = require('compression')
 const express = require('express')
 var Redis = require('ioredis')
 var redis = new Redis(process.env.REDIS_URL)
 const app = express()
+app.use(compression())
 const port = process.env.PORT
 
 app.use(express.json()) 
