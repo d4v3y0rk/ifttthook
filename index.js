@@ -18,8 +18,11 @@ app.post('/rest/garage', async (req, res) => {
 app.get('/rest/garage', async (req, res) => {
     console.log(`GET: got a call to /rest/garage`)
     var value = await redis.get("garage")
+    var response = {
+        "action": value
+    }
     await redis.set('garage', '')
-    res.send(value)
+    res.json(response)
 })
 
 app.post('/rest/geofence', async (req, res) => {
