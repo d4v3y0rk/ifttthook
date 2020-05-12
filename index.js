@@ -13,7 +13,7 @@ app.get('/toggle', async (req, res) => {
 })
 
 app.get('/', async (req, res) => {
-    if (client.get('garage') == "toggle") {
+    if (redisClient.get('garage') == "toggle") {
         console.log(redisClient.get('garage'))
         res.send(`Found the key...`)
     } else {
