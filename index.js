@@ -6,6 +6,7 @@ const port = process.env.PORT
 
 app.use(express.json()) 
 app.use(express.urlencoded({ extended: true }))
+app.disable('x-powered-by')
 
 app.post('/rest/garage', async (req, res) => {
     console.log(`POST: got a call to /rest/garage`)
