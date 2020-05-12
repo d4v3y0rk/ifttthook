@@ -1,6 +1,7 @@
 const express = require('express')
+const redis = require("redis")
 const app = express()
-const client = require('redis').createClient(process.env.REDIS_URL)
+const client = redis.createClient(process.env.REDIS_URL)
 const port = process.env.PORT
 
 app.use(express.json()) 
