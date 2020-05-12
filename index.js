@@ -13,8 +13,9 @@ app.get('/toggle', async (req, res) => {
 })
 
 app.get('/', async (req, res) => {
-    if (redisClient.get('garage') == "toggle") {
-        console.log(redisClient.get('garage'))
+    var myVar = await redisClient.get('garage')
+    if ( myVar == "toggle") {
+        console.log(myVar)
         res.send(`Found the key...`)
     } else {
         res.send(`did not find the key.`)
