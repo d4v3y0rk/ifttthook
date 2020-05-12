@@ -7,14 +7,14 @@ const port = process.env.PORT
 app.use(express.json()) 
 app.use(express.urlencoded({ extended: true }))
 
-app.get('/toggle', (req, res) => {
-    client.set("garage", "toggle", redis.print)
+app.get('/toggle', async (req, res) => {
+    await client.set("garage", "toggle", redis.print)
     res.sendStatus(200)
 })
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
     console.log(client.get('garage'))
-    client.set('garage', '', redis.print)
+    await client.set('garage', '', redis.print)
     res.sendStatus(200)
 })
 app.listen(port, () => console.log(`IfTTT Hook App Listening...`))
