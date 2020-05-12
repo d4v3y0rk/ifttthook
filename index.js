@@ -3,7 +3,11 @@ const app = express()
 const port = process.env.PORT
 
 app.get('/', (req, res) => {
-    console.log(req.body)
+    try {
+        console.log(req.body)
+    } catch (error) {
+        console.log(`no request body...`)
+    }
     res.sendStatus(200)
 })
 
